@@ -368,7 +368,6 @@ class _NewItemScreenState extends State<NewItemScreen> {
           "image2": base64Image2,
           "image3": base64Image3
         }).then((response) {
-      print(response.body);
       if (response.statusCode == 200) {
         var jsondata = jsonDecode(response.body);
         if (jsondata['status'] == 'success') {

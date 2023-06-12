@@ -150,7 +150,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
     http.post(Uri.parse("${MyConfig().SERVER}/barterit/php/load_items.php"),
         body: {"user_id": widget.user.id}).then((response) {
       itemList.clear();
-      print(response.body);
       if (response.statusCode == 200) {
         var jsondata = jsonDecode(response.body);
         if (jsondata['status'] == "success") {
