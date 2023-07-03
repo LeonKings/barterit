@@ -14,8 +14,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(maintitle),
+    return Scaffold(
+      appBar: AppBar(title: Text(maintitle))
     );
   }
 }

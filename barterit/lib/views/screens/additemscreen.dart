@@ -39,6 +39,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
       axiscount = 2;
     }
     return Scaffold(
+      appBar: AppBar(title: Text(maintitle)),
       body: itemList.isEmpty
           ? const Center(
               child: Text("No Data"),

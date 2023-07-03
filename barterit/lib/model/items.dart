@@ -8,7 +8,7 @@ class Items {
   String? itemsLong;
   String? itemsState;
   String? itemsLocality;
-  String? itemsDate;
+  String? date;
 
   Items({
     this.itemsId,
@@ -20,7 +20,7 @@ class Items {
     this.itemsLong,
     this.itemsState,
     this.itemsLocality,
-    this.itemsDate,
+    this.date,
   });
 
   Items.fromJson(Map<String, dynamic> json) {
@@ -33,7 +33,7 @@ class Items {
     itemsLong = json['item_long'];
     itemsState = json['item_state'];
     itemsLocality = json['item_locality'];
-    itemsDate = json['item_date'];
+    date = json['date'];
   }
 
   Map<String, dynamic> toJson() {
@@ -47,7 +47,7 @@ class Items {
     data['item_long'] = itemsLong;
     data['item_state'] = itemsState;
     data['item_locality'] = itemsLocality;
-    data['item_date'] = itemsDate;
+    data['date'] = date;
     return data;
   }
 }
