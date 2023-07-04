@@ -25,11 +25,16 @@ class _BarterScreenState extends State<BarterScreen> {
   int numofpage = 1, curpage = 1;
   int numofresult = 0;
   bool _searchBoolean = false;
+  var color;
 
   TextEditingController searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
+    loadItems(1);
+  }
+
+  Future<void> _refreshItems() async {
     loadItems(1);
   }
 
@@ -44,7 +49,7 @@ class _BarterScreenState extends State<BarterScreen> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text(maintitle),
+        title: !_searchBoolean ? Text(maintitle) : _searchTextField(),
         actions: _searchBoolean
             ? [
                 IconButton(
@@ -82,64 +87,112 @@ class _BarterScreenState extends State<BarterScreen> {
                 ),
               ),
               Expanded(
-                  child: GridView.count(
-                      crossAxisCount: axiscount,
-                      children: List.generate(
-                        itemList.length,
-                        (index) {
-                          return Card(
-                              child: InkWell(
-                                  onTap: () async {
-                                    Items useritem = Items.fromJson(
-                                        itemList[index].toJson());
-                                    await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (content) =>
-                                                ItemDetailScreen(
-                                                  user: widget.user,
-                                                  useritems: useritem,
-                                                )));
-                                    loadItems(1);
-                                  },
-                                  child: Column(children: [
-                                    SizedBox(
-                                      height: 120,
-                                      child: ListView.builder(
-                                        scrollDirection: Axis.vertical,
-                                        itemCount: 1,
-                                        itemBuilder: (context, imageIndex) {
-                                          return Column(children: [
-                                            CachedNetworkImage(
-                                              width: screenWidth,
-                                              fit: BoxFit.cover,
-                                              imageUrl:
-                                                  "${MyConfig().SERVER}/barterit/assets/items/1/${itemList[index].itemsId}.png",
-                                              placeholder: (context, url) =>
-                                                  const LinearProgressIndicator(),
-                                              errorWidget:
-                                                  (context, url, error) =>
+                  child: RefreshIndicator(
+                      onRefresh: _refreshItems,
+                      child: GridView.count(
+                          crossAxisCount: axiscount,
+                          children: List.generate(
+                            itemList.length,
+                            (index) {
+                              return Card(
+                                  child: InkWell(
+                                      onTap: () async {
+                                        Items useritem = Items.fromJson(
+                                            itemList[index].toJson());
+                                        await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (content) =>
+                                                    ItemDetailScreen(
+                                                      user: widget.user,
+                                                      useritems: useritem,
+                                                    )));
+                                        loadItems(1);
+                                      },
+                                      child: Column(children: [
+                                        SizedBox(
+                                          height: 120,
+                                          child: ListView.builder(
+                                            scrollDirection: Axis.vertical,
+                                            itemCount: 1,
+                                            itemBuilder: (context, imageIndex) {
+                                              return Column(children: [
+                                                CachedNetworkImage(
+                                                  width: screenWidth,
+                                                  fit: BoxFit.cover,
+                                                  imageUrl:
+                                                      "${MyConfig().SERVER}/barterit/assets/items/1/${itemList[index].itemsId}.png",
+                                                  placeholder: (context, url) =>
+                                                      const LinearProgressIndicator(),
+                                                  errorWidget: (context, url,
+                                                          error) =>
                                                       const Icon(Icons.error),
-                                            ),
-                                          ]);
-                                        },
-                                      ),
-                                    ),
-                                    Text(
-                                      itemList[index].itemsName.toString(),
-                                      style: const TextStyle(fontSize: 20),
-                                    ),
-                                    Text(
-                                      "${itemList[index].itemsQty} items",
-                                      style: const TextStyle(fontSize: 14),
-                                    ),
-                                    Text(
-                                      "At ${itemList[index].itemsState} ",
-                                      style: const TextStyle(fontSize: 14),
-                                    ),
-                                  ])));
+                                                ),
+                                                CachedNetworkImage(
+                                                  width: screenWidth,
+                                                  fit: BoxFit.cover,
+                                                  imageUrl:
+                                                      "${MyConfig().SERVER}/barterit/assets/items/2/${itemList[index].itemsId}.png",
+                                                  placeholder: (context, url) =>
+                                                      const LinearProgressIndicator(),
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      const Icon(Icons.error),
+                                                ),
+                                                CachedNetworkImage(
+                                                  width: screenWidth,
+                                                  fit: BoxFit.cover,
+                                                  imageUrl:
+                                                      "${MyConfig().SERVER}/barterit/assets/items/3/${itemList[index].itemsId}.png",
+                                                  placeholder: (context, url) =>
+                                                      const LinearProgressIndicator(),
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      const Icon(Icons.error),
+                                                )
+                                              ]);
+                                            },
+                                          ),
+                                        ),
+                                        Text(
+                                          itemList[index].itemsName.toString(),
+                                          style: const TextStyle(fontSize: 20),
+                                        ),
+                                        Text(
+                                          "${itemList[index].itemsQty} items",
+                                          style: const TextStyle(fontSize: 14),
+                                        ),
+                                        Text(
+                                          "At ${itemList[index].itemsState} ",
+                                          style: const TextStyle(fontSize: 14),
+                                        ),
+                                      ])));
+                            },
+                          )))),
+              SizedBox(
+                height: 50,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: numofpage,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    if ((curpage - 1) == index) {
+                      color = Colors.brown;
+                    } else {
+                      color = Colors.grey;
+                    }
+                    return TextButton(
+                        onPressed: () {
+                          curpage = index + 1;
+                          loadItems(index + 1);
                         },
-                      )))
+                        child: Text(
+                          (index + 1).toString(),
+                          style: TextStyle(color: color, fontSize: 18),
+                        ));
+                  },
+                ),
+              ),
             ]),
     );
   }
@@ -190,11 +243,7 @@ class _BarterScreenState extends State<BarterScreen> {
   void searchItems(String search) {
     http.post(Uri.parse("${MyConfig().SERVER}/barterit/php/load_items.php"),
         body: {"search": search}).then((response) {
-      print(response.body);
       itemList.clear();
-      print("wakamoli dfjdkf");
-      print(response.body);
-      print("haloha");
       if (response.statusCode == 200) {
         var jsondata = jsonDecode(response.body);
         if (jsondata['status'] == "success") {

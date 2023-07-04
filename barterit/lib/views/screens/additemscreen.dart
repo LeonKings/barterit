@@ -29,6 +29,10 @@ class _AddItemScreenState extends State<AddItemScreen> {
     loadItems();
   }
 
+  Future<void> _refreshItems() async {
+    loadItems();
+  }
+
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -55,70 +59,72 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 ),
               ),
               Expanded(
-                  child: GridView.count(
-                      crossAxisCount: axiscount,
-                      children: List.generate(
-                        itemList.length,
-                        (index) {
-                          return Card(
-                              child: InkWell(
-                                  child: Column(children: [
-                            SizedBox(
-                              height: 120,
-                              child: ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                itemCount: 1,
-                                itemBuilder: (context, imageIndex) {
-                                  return Column(children: [
-                                    CachedNetworkImage(
-                                      width: screenWidth,
-                                      fit: BoxFit.cover,
-                                      imageUrl:
-                                          "${MyConfig().SERVER}/barterit/assets/items/1/${itemList[index].itemsId}.png",
-                                      placeholder: (context, url) =>
-                                          const LinearProgressIndicator(),
-                                      errorWidget: (context, url, error) =>
-                                          const Icon(Icons.error),
-                                    ),
-                                    CachedNetworkImage(
-                                      width: screenWidth,
-                                      fit: BoxFit.cover,
-                                      imageUrl:
-                                          "${MyConfig().SERVER}/barterit/assets/items/2/${itemList[index].itemsId}.png",
-                                      placeholder: (context, url) =>
-                                          const LinearProgressIndicator(),
-                                      errorWidget: (context, url, error) =>
-                                          const Icon(Icons.error),
-                                    ),
-                                    CachedNetworkImage(
-                                      width: screenWidth,
-                                      fit: BoxFit.cover,
-                                      imageUrl:
-                                          "${MyConfig().SERVER}/barterit/assets/items/3/${itemList[index].itemsId}.png",
-                                      placeholder: (context, url) =>
-                                          const LinearProgressIndicator(),
-                                      errorWidget: (context, url, error) =>
-                                          const Icon(Icons.error),
-                                    )
-                                  ]);
-                                },
-                              ),
-                            ),
-                            Text(
-                              itemList[index].itemsName.toString(),
-                              style: const TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              "${itemList[index].itemsQty} items",
-                              style: const TextStyle(fontSize: 14),
-                            ),
-                            Text(
-                              "At ${itemList[index].itemsState} ",
-                              style: const TextStyle(fontSize: 14),
-                            ),
-                          ])));
-                        },
-                      )))
+                  child: RefreshIndicator(
+                      onRefresh: _refreshItems,
+                      child: GridView.count(
+                          crossAxisCount: axiscount,
+                          children: List.generate(
+                            itemList.length,
+                            (index) {
+                              return Card(
+                                  child: InkWell(
+                                      child: Column(children: [
+                                SizedBox(
+                                  height: 120,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: 1,
+                                    itemBuilder: (context, imageIndex) {
+                                      return Column(children: [
+                                        CachedNetworkImage(
+                                          width: screenWidth,
+                                          fit: BoxFit.cover,
+                                          imageUrl:
+                                              "${MyConfig().SERVER}/barterit/assets/items/1/${itemList[index].itemsId}.png",
+                                          placeholder: (context, url) =>
+                                              const LinearProgressIndicator(),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
+                                        ),
+                                        CachedNetworkImage(
+                                          width: screenWidth,
+                                          fit: BoxFit.cover,
+                                          imageUrl:
+                                              "${MyConfig().SERVER}/barterit/assets/items/2/${itemList[index].itemsId}.png",
+                                          placeholder: (context, url) =>
+                                              const LinearProgressIndicator(),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
+                                        ),
+                                        CachedNetworkImage(
+                                          width: screenWidth,
+                                          fit: BoxFit.cover,
+                                          imageUrl:
+                                              "${MyConfig().SERVER}/barterit/assets/items/3/${itemList[index].itemsId}.png",
+                                          placeholder: (context, url) =>
+                                              const LinearProgressIndicator(),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
+                                        )
+                                      ]);
+                                    },
+                                  ),
+                                ),
+                                Text(
+                                  itemList[index].itemsName.toString(),
+                                  style: const TextStyle(fontSize: 20),
+                                ),
+                                Text(
+                                  "${itemList[index].itemsQty} items",
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                                Text(
+                                  "At ${itemList[index].itemsState} ",
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                              ])));
+                            },
+                          ))))
             ]),
       floatingActionButton: FloatingActionButton(
           onPressed: () async {
