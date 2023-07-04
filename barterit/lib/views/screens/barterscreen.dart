@@ -24,6 +24,7 @@ class _BarterScreenState extends State<BarterScreen> {
   List<Items> itemList = <Items>[];
   int numofpage = 1, curpage = 1;
   int numofresult = 0;
+  bool _searchBoolean = false;
 
   TextEditingController searchController = TextEditingController();
   @override
@@ -44,13 +45,27 @@ class _BarterScreenState extends State<BarterScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(maintitle),
-        actions: [
-          IconButton(
-              onPressed: () {
-                showsearchDialog();
-              },
-              icon: const Icon(Icons.search)),
-        ],
+        actions: _searchBoolean
+            ? [
+                IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    setState(() {
+                      _searchBoolean = false;
+                    });
+                  },
+                )
+              ]
+            : [
+                IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () {
+                    setState(() {
+                      _searchBoolean = true;
+                    });
+                  },
+                )
+              ],
       ),
       body: itemList.isEmpty
           ? const Center(
@@ -148,50 +163,27 @@ class _BarterScreenState extends State<BarterScreen> {
     });
   }
 
-  void showsearchDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10.0))),
-          title: const Text(
-            "Search?",
-            style: TextStyle(),
-          ),
-          content: Column(mainAxisSize: MainAxisSize.min, children: [
-            TextField(
-                controller: searchController,
-                decoration: const InputDecoration(
-                    labelText: 'Search',
-                    labelStyle: TextStyle(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 2.0),
-                    ))),
-            const SizedBox(
-              height: 4,
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  String search = searchController.text;
-                  searchItems(search);
-                  Navigator.of(context).pop();
-                },
-                child: const Text("Search"))
-          ]),
-          actions: <Widget>[
-            TextButton(
-              child: const Text(
-                "Close",
-                style: TextStyle(),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
+  Widget _searchTextField() {
+    return TextField(
+      autofocus: true,
+      cursorColor: Colors.white,
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 20,
+      ),
+      textInputAction: TextInputAction.search,
+      onSubmitted: (search) => searchItems(search),
+      decoration: const InputDecoration(
+        enabledBorder:
+            UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+        focusedBorder:
+            UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+        hintText: 'Search',
+        hintStyle: TextStyle(
+          color: Colors.white60,
+          fontSize: 20,
+        ),
+      ),
     );
   }
 
