@@ -326,7 +326,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
               ),
               onPressed: () {
                 Navigator.of(context).pop();
-                insertitem();
+                deductCoin();
               },
             ),
             TextButton(
