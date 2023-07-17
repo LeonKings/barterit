@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../model/user.dart';
-import 'barterscreen.dart';
+import 'barter/barterscreen.dart';
 import 'chatscreen.dart';
-import 'profiletabscreen.dart';
-import 'additemscreen.dart';
+import 'profile/profiletabscreen.dart';
+import 'seller/additemscreen.dart';
 
 class MainScreen extends StatefulWidget {
   final User user;

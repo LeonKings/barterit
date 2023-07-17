@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'model/user.dart';
 import 'myconfig.dart';
 import 'views/screens/mainscreen.dart';
+import 'views/screens/profile/loginscreen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -74,21 +75,7 @@ class _SplashScreenState extends State<SplashScreen> {
             var jsondata = jsonDecode(response.body);
             user = User.fromJson(jsondata['data']);
             Timer(
-                const Duration(seconds: 3),
-                () => Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (content) => MainScreen(user: user))));
-          } else {
-            user = User(
-                id: "na",
-                name: "na",
-                email: "na",
-                datareg: "na",
-                password: "na",
-                otp: "na");
-            Timer(
-                const Duration(seconds: 3),
+                const Duration(seconds: 5),
                 () => Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
@@ -97,17 +84,12 @@ class _SplashScreenState extends State<SplashScreen> {
         }).timeout(const Duration(seconds: 5), onTimeout: () {});
       } on TimeoutException catch (_) {}
     } else {
-      user = User(
-          id: "na",
-          name: "na",
-          email: "na",
-          datareg: "na",
-          password: "na",
-          otp: "na");
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.clear();
       Timer(
           const Duration(seconds: 3),
           () => Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (content) => MainScreen(user: user))));
+              MaterialPageRoute(builder: (content) => const LoginScreen())));
     }
   }
 }

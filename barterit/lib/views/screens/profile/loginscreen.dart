@@ -1,13 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../model/user.dart';
-import '../../myconfig.dart';
-import 'mainscreen.dart';
+import '../../../model/user.dart';
+import '../../../myconfig.dart';
+import '../mainscreen.dart';
 import 'registrationscreen.dart';
 
 class LoginScreen extends StatefulWidget {

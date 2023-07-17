@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../model/items.dart';
-import '../../model/user.dart';
+import '../../../model/items.dart';
+import '../../../model/user.dart';
 import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:http/http.dart' as http;
@@ -149,11 +149,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
   }
 
   void loadItems() {
-    if (widget.user.id == "na") {
-      setState(() {});
-      return;
-    }
-
     http.post(Uri.parse("${MyConfig().SERVER}/barterit/php/load_items.php"),
         body: {"user_id": widget.user.id}).then((response) {
       itemList.clear();

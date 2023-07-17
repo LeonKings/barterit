@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:barterit/myconfig.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-
-import '../../model/user.dart';
+import '../../../model/user.dart';
+import '../profile/buycoinscreen.dart';
 
 class NewItemScreen extends StatefulWidget {
   final User user;
@@ -368,22 +368,95 @@ class _NewItemScreenState extends State<NewItemScreen> {
           "image2": base64Image2,
           "image3": base64Image3
         }).then((response) {
+      if (!mounted) return;
       if (response.statusCode == 200) {
         var jsondata = jsonDecode(response.body);
         if (jsondata['status'] == 'success') {
           ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text("Insert Success")));
+          Navigator.pop(context);
         } else {
           ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text("Insert Failed")));
         }
-        Navigator.pop(context);
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Insert Failed")));
-        Navigator.pop(context);
       }
     });
+  }
+
+  void deductCoin() async {
+    int currentCoin = int.parse(widget.user.coin!) - 10;
+
+    if (currentCoin > 0) {
+      http.post(Uri.parse("${MyConfig().SERVER}/barterit/php/update_coin.php"),
+          body: {
+            "user_id": widget.user.id.toString(),
+            "coins": currentCoin.toString(),
+            "status": "pay"
+          }).then((response) {
+        if (response.statusCode == 200) {
+          var jsondata = jsonDecode(response.body);
+          if (jsondata['status'] == 'success') {
+            insertitem();
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Failed to deduct Coins")));
+          }
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Failed to deduct Coins")));
+        }
+      });
+    } else {
+      showInsufficientCoinDialog();
+    }
+  }
+
+  void showInsufficientCoinDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0))),
+          title: const Text(
+            "Insufficient Coins",
+            style: TextStyle(),
+          ),
+          content: const Text(
+            "You don't have enough coins. Do you want to buy more coins?",
+            style: TextStyle(),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                "Yes",
+                style: TextStyle(),
+              ),
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BuyCoinScreen(user: widget.user)),
+                  (route) => false,
+                );
+              },
+            ),
+            TextButton(
+              child: const Text(
+                "No",
+                style: TextStyle(),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void _determinePosition() async {

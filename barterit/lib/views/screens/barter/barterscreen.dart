@@ -2,11 +2,13 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import '../../model/items.dart';
-import '../../model/user.dart';
-import '../../myconfig.dart';
+import '../../../model/items.dart';
+import '../../../model/user.dart';
+import '../../../myconfig.dart';
 import 'itemdetailscreen.dart';
 import 'package:http/http.dart' as http;
+
+import 'orderscreen.dart';
 
 class BarterScreen extends StatefulWidget {
   final User user;
@@ -25,6 +27,7 @@ class _BarterScreenState extends State<BarterScreen> {
   int numofpage = 1, curpage = 1;
   int numofresult = 0;
   bool _searchBoolean = false;
+  // ignore: prefer_typing_uninitialized_variables
   var color;
 
   TextEditingController searchController = TextEditingController();
@@ -68,6 +71,16 @@ class _BarterScreenState extends State<BarterScreen> {
                     setState(() {
                       _searchBoolean = true;
                     });
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.list_rounded),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (content) =>
+                                OrderScreen(user: widget.user)));
                   },
                 )
               ],
