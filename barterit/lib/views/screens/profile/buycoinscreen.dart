@@ -24,11 +24,11 @@ class _BuyCoinScreenState extends State<BuyCoinScreen> {
   String maintitle = 'Coins Shop';
   List<Coins> coin = [
     Coins(amount: 10, price: 10),
-    Coins(amount: 15, price: 15),
-    Coins(amount: 20, price: 19),
+    Coins(amount: 15, price: 14),
+    Coins(amount: 20, price: 17),
     Coins(amount: 30, price: 25),
-    Coins(amount: 40, price: 35),
-    Coins(amount: 60, price: 50),
+    Coins(amount: 40, price: 32),
+    Coins(amount: 60, price: 48),
   ];
 
   @override

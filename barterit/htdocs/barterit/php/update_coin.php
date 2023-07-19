@@ -21,7 +21,7 @@ if ($status == 'buy') {
         sendJsonResponse($response);
     }
 } else if ($status == 'pay') {
-    $sqlupdate = "UPDATE `tbl_users` SET `user_coin` = `user_coin` - $coins WHERE `user_id` = '$userid'";
+    $sqlupdate = "UPDATE `tbl_users` SET `user_coin` = $coins WHERE `user_id` = '$userid'";
     if ($conn->query($sqlupdate) === TRUE) {
         $response = array('status' => 'success', 'data' => $sqlupdate);
         sendJsonResponse($response);

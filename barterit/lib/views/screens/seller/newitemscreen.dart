@@ -256,7 +256,6 @@ class _NewItemScreenState extends State<NewItemScreen> {
       maxHeight: 1200,
       maxWidth: 800,
     );
-
     if (pickedFile != null) {
       File imgFile = File(pickedFile.path);
       cropImage(imgFile, imgInd);
@@ -387,7 +386,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
   }
 
   void deductCoin() async {
-    int currentCoin = int.parse(widget.user.coin!) - 10;
+    int currentCoin = int.parse(widget.user.coin!) - 5;
 
     if (currentCoin > 0) {
       http.post(Uri.parse("${MyConfig().SERVER}/barterit/php/update_coin.php"),

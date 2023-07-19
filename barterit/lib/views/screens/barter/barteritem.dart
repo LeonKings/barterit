@@ -42,7 +42,7 @@ class _BarterItemState extends State<BarterItem> {
     return Scaffold(
       appBar: AppBar(
         title: Text(maintitle),
-        backgroundColor: Colors.lightGreen,
+        backgroundColor: Colors.brown,
         foregroundColor: Colors.white,
         elevation: 5,
       ),

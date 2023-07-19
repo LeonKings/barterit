@@ -91,28 +91,6 @@ class _OrderScreenState extends State<OrderScreen> {
                                 errorWidget: (context, url, error) =>
                                     const Icon(Icons.error),
                               ),
-                              const SizedBox(height: 10),
-                              CachedNetworkImage(
-                                width: screenWidth,
-                                fit: BoxFit.cover,
-                                imageUrl:
-                                    "${MyConfig().SERVER}/barterit/assets/items/2/${order.buyerItemId}.png",
-                                placeholder: (context, url) =>
-                                    const LinearProgressIndicator(),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error),
-                              ),
-                              const SizedBox(height: 10),
-                              CachedNetworkImage(
-                                width: screenWidth,
-                                fit: BoxFit.cover,
-                                imageUrl:
-                                    "${MyConfig().SERVER}/barterit/assets/items/3/${order.buyerItemId}.png",
-                                placeholder: (context, url) =>
-                                    const LinearProgressIndicator(),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error),
-                              ),
                               const SizedBox(height: 8),
                               Text(
                                 order.buyerName.toString(),
@@ -139,28 +117,6 @@ class _OrderScreenState extends State<OrderScreen> {
                                 fit: BoxFit.cover,
                                 imageUrl:
                                     "${MyConfig().SERVER}/barterit/assets/items/1/${order.sellerItemId}.png",
-                                placeholder: (context, url) =>
-                                    const LinearProgressIndicator(),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error),
-                              ),
-                              const SizedBox(height: 10),
-                              CachedNetworkImage(
-                                width: screenWidth,
-                                fit: BoxFit.cover,
-                                imageUrl:
-                                    "${MyConfig().SERVER}/barterit/assets/items/2/${order.sellerItemId}.png",
-                                placeholder: (context, url) =>
-                                    const LinearProgressIndicator(),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error),
-                              ),
-                              const SizedBox(height: 10),
-                              CachedNetworkImage(
-                                width: screenWidth,
-                                fit: BoxFit.cover,
-                                imageUrl:
-                                    "${MyConfig().SERVER}/barterit/assets/items/3/${order.sellerItemId}.png",
                                 placeholder: (context, url) =>
                                     const LinearProgressIndicator(),
                                 errorWidget: (context, url, error) =>

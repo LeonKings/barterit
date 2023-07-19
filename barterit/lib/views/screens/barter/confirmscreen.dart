@@ -31,7 +31,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
     screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.lightGreen,
+        backgroundColor: Colors.brown,
         foregroundColor: Colors.white,
         title: Text(maintitle),
       ),
@@ -54,7 +54,25 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                       const SizedBox(height: 10),
                       CachedNetworkImage(
                         imageUrl:
-                            "${MyConfig().SERVER}/barterit/assets/items/front/${widget.selecteditems.itemsId}.png",
+                            "${MyConfig().SERVER}/barterit/assets/items/1/${widget.selecteditems.itemsId}.png",
+                        placeholder: (context, url) =>
+                            const LinearProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      ),
+                      const SizedBox(height: 10),
+                      CachedNetworkImage(
+                        imageUrl:
+                            "${MyConfig().SERVER}/barterit/assets/items/2/${widget.selecteditems.itemsId}.png",
+                        placeholder: (context, url) =>
+                            const LinearProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      ),
+                      const SizedBox(height: 10),
+                      CachedNetworkImage(
+                        imageUrl:
+                            "${MyConfig().SERVER}/barterit/assets/items/3/${widget.selecteditems.itemsId}.png",
                         placeholder: (context, url) =>
                             const LinearProgressIndicator(),
                         errorWidget: (context, url, error) =>
@@ -84,7 +102,25 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                       const SizedBox(height: 10),
                       CachedNetworkImage(
                         imageUrl:
-                            "${MyConfig().SERVER}/barterit/assets/items/front/${widget.useritems.itemsId}.png",
+                            "${MyConfig().SERVER}/barterit/assets/items/1/${widget.useritems.itemsId}.png",
+                        placeholder: (context, url) =>
+                            const LinearProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      ),
+                      const SizedBox(height: 10),
+                      CachedNetworkImage(
+                        imageUrl:
+                            "${MyConfig().SERVER}/barterit/assets/items/2/${widget.useritems.itemsId}.png",
+                        placeholder: (context, url) =>
+                            const LinearProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      ),
+                      const SizedBox(height: 10),
+                      CachedNetworkImage(
+                        imageUrl:
+                            "${MyConfig().SERVER}/barterit/assets/items/3/${widget.useritems.itemsId}.png",
                         placeholder: (context, url) =>
                             const LinearProgressIndicator(),
                         errorWidget: (context, url, error) =>

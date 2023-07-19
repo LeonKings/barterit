@@ -128,18 +128,13 @@ class _AddItemScreenState extends State<AddItemScreen> {
             ]),
       floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            if (widget.user.id != "na") {
-              await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (content) => NewItemScreen(
-                            user: widget.user,
-                          )));
-              loadItems();
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text("Please login/register an account")));
-            }
+            await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (content) => NewItemScreen(
+                          user: widget.user,
+                        )));
+            loadItems();
           },
           child: const Text(
             "+",
