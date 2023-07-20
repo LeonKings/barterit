@@ -7,13 +7,8 @@ if (!isset($_POST)) {
 
 include_once("dbconnect.php");
 
-$results_per_page = 8;
-if (isset($_POST['pageno'])){
-	$pageno = (int)$_POST['pageno'];
-}else{
-	$pageno = 1;
-}
-$page_first_result = ($pageno - 1) * $results_per_page;
+
+
 
 if (isset($_POST['user_id'])){
 	$userid = $_POST['user_id'];	
@@ -26,6 +21,13 @@ if (isset($_POST['user_id'])){
 }
 
 $result = $conn->query($sqlloaditems);
+$results_per_page = 8;
+if (isset($_POST['pageno'])){
+	$pageno = (int)$_POST['pageno'];
+}else{
+	$pageno = 1;
+}
+$page_first_result = ($pageno - 1) * $results_per_page;
 $number_of_result = $result->num_rows;
 $number_of_page = ceil($number_of_result / $results_per_page);
 $sqlloaditems = $sqlloaditems . " LIMIT $page_first_result , $results_per_page";
